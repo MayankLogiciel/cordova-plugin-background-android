@@ -21,11 +21,8 @@
 
 package de.appplant.cordova.plugin.background;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
@@ -36,20 +33,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
-import de.appplant.cordova.plugin.background.AlarmReceive;
-import android.app.PendingIntent;
-
 
 import static android.content.Context.BIND_AUTO_CREATE;
 import static de.appplant.cordova.plugin.background.BackgroundModeExt.clearKeyguardFlags;
 
 public class BackgroundMode extends CordovaPlugin {
-
-    AlarmManager alarmManager;
-
-    PendingIntent pendingIntent;
-
-    private Context context;
 
     // Event types for callbacks
     private enum Event { ACTIVATE, DEACTIVATE, FAILURE }
@@ -116,9 +104,6 @@ public class BackgroundMode extends CordovaPlugin {
             case "disable":
                 disableMode();
                 break;
-            case "starttracking":
-                startLocationTracking();
-                break;
             default:
                 validAction = false;
         }
@@ -130,17 +115,6 @@ public class BackgroundMode extends CordovaPlugin {
         }
 
         return validAction;
-    }
-
-    @SuppressLint("ServiceCast")
-    public  void startLocationTracking()
-    {
-        Activity context = cordova.getActivity();
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceive.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 30000,
-                pendingIntent);
     }
 
     /**

@@ -73,22 +73,9 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
         </config-file>
-		
-		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="de.appplant.cordova.plugin.background.BookingTrackingService"/>
-            <receiver
-                android:name="de.appplant.cordova.plugin.background.AlarmReceive"
-                android:exported="false">
-                <intent-filter>
-                    <action android:name="android.intent.action.BOOT_COMPLETED" />
-                </intent-filter>
-            </receiver>
-        </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.WAKE_LOCK" />
-            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         </config-file>
 
         <source-file
@@ -101,14 +88,6 @@
 
         <source-file
             src="src/android/ForegroundService.java"
-            target-dir="src/de/appplant/cordova/plugin/background" />
-
-        <source-file
-            src="src/android/AlarmReceive.java"
-            target-dir="src/de/appplant/cordova/plugin/background" />
-
-        <source-file
-            src="src/android/BookingTrackingService.java"
             target-dir="src/de/appplant/cordova/plugin/background" />
     </platform>
 
