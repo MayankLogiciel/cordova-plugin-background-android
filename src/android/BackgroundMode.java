@@ -359,7 +359,11 @@ public class BackgroundMode extends CordovaPlugin {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, BroadCasterService.class);
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 30000,
+
+        // Setting to 0ms to fix battery draining and background ForegroundServiceStartNotAllowedException (Crash) JMB-1074
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 30000,
+        //               pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 0,
                 pendingIntent);
     }
 
